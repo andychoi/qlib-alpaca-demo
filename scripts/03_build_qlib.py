@@ -25,7 +25,7 @@ def ensure_qlib_repo(path: Path) -> None:
     )
 
 
-def make_sp500_instrument(csv_dir: Path, qlib_dir: Path) -> None:
+def make_instrument_file(csv_dir: Path, qlib_dir: Path, instrument_name: str) -> None:
     rows = []
     for path in sorted(csv_dir.glob("*.csv")):
         if path.stem.upper() == "SPY":
@@ -37,7 +37,7 @@ def make_sp500_instrument(csv_dir: Path, qlib_dir: Path) -> None:
 
     inst_dir = qlib_dir / "instruments"
     inst_dir.mkdir(parents=True, exist_ok=True)
-    out = inst_dir / "sp500.txt"
+    out = inst_dir / f"{instrument_name}.txt"
     pd.DataFrame(rows).to_csv(out, sep="\t", header=False, index=False)
     print(f"Wrote {len(rows)} instruments to {out}")
 
@@ -53,6 +53,7 @@ def main() -> None:
         "--qlib-repo", default=os.getenv("QLIB_REPO", ".cache/qlib")
     )
     p.add_argument("--rebuild", action="store_true")
+    p.add_argument("--instrument-name", default="sp500")
     args = p.parse_args()
 
     csv_dir = Path(args.csv_dir).expanduser().resolve()
@@ -93,7 +94,7 @@ def main() -> None:
     print("Running Qlib dump_bin.py ...")
     subprocess.run(cmd, check=True)
 
-    make_sp500_instrument(csv_dir, qlib_dir)
+    make_instrument_file(csv_dir, qlib_dir, args.instrument_name)
 
     print()
     print("Qlib dataset ready:")

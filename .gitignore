@@ -4,6 +4,7 @@
 __pycache__/
 *.pyc
 data/qlib_csv/*.csv
+data/us_equity_csv/*.csv
 reports/*.csv
 mlflow.db
 mlruns/

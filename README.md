@@ -17,6 +17,9 @@ Before using this with RD-Agent for serious research, replace the current-member
 - `scripts/01_fetch_constituents.py`
   - downloads a current S&P 500 constituent snapshot
   - preserves the Alpaca ticker and creates a Qlib-safe ticker
+- `scripts/01_fetch_us_equity_candidates.py`
+  - builds an exchange-listed common-stock candidate snapshot
+  - excludes ETFs, ADRs, preferred shares, SPACs, warrants, rights, and units
 - `scripts/02_fetch_alpaca_daily.py`
   - downloads daily OHLCV + VWAP from Alpaca
   - also downloads `SPY` for the benchmark
@@ -26,6 +29,9 @@ Before using this with RD-Agent for serious research, replace the current-member
   - clones Qlib if needed
   - invokes Qlib's official `scripts/dump_bin.py`
   - creates `instruments/sp500.txt`
+- `scripts/03_build_liquid_universe.py`
+  - creates monthly point-in-time `us_liquid_1000` membership intervals
+  - applies price, history, coverage, and trailing dollar-volume rules
 - `scripts/04_verify_qlib.py`
   - verifies calendar/instruments/features
   - optionally instantiates Alpha158
@@ -36,6 +42,8 @@ Before using this with RD-Agent for serious research, replace the current-member
   - validation: 2023-2024
   - test/backtest: 2025-2026-08-21 (data handler through 2026-08-24)
   - stores MLflow experiment metadata in local SQLite (`mlflow.db`)
+- `configs/workflow_us_liquid_1000_lightgbm_alpha158.yaml`
+  - separate Alpha158/LightGBM experiment for the liquid US stock universe
 
 ## 1. Create environment
 
@@ -223,3 +231,78 @@ First save the Qlib baseline metrics:
 - turnover and costs
 
 Then use exactly the same data splits when testing RD-Agent-generated factors.
+
+## Point-in-time liquid US equity universe
+
+The repository also supports a separate `us_liquid_1000` research universe.
+It starts from exchange-listed US common-stock candidates, excludes ETFs and
+other non-common-share structures, and selects membership monthly using only
+information available at the preceding month-end.
+
+Default eligibility rules are:
+
+- closing price of at least $3
+- at least 120 valid daily observations
+- at least 90% coverage over the trailing 60 sessions
+- trailing 60-session median dollar volume of at least $2 million
+- top 1,000 remaining symbols by median dollar volume
+
+Create the candidate security master:
+
+```bash
+python scripts/01_fetch_us_equity_candidates.py
+```
+
+Download candidates into a separate cache. Historical SIP is preferred for
+liquidity and volume calculations; the downloader merges with existing CSVs,
+so later commands can request only missing dates.
+
+```bash
+ALPACA_DATA_FEED=sip python scripts/02_fetch_alpaca_daily.py \
+  --universe data/universe/us_equity_candidates.csv \
+  --output-dir data/us_equity_csv \
+  --status-file reports/us_equity_download_status.csv \
+  --start 2020-01-01
+```
+
+Build the binary data and then replace the static candidate instrument file
+with point-in-time liquid membership intervals:
+
+```bash
+python scripts/03_build_qlib.py --rebuild \
+  --csv-dir data/us_equity_csv \
+  --qlib-dir ~/.qlib/qlib_data/us_liquid_alpaca \
+  --qlib-repo ../qlib \
+  --instrument-name us_equity_candidates
+
+python scripts/03_build_liquid_universe.py \
+  --csv-dir data/us_equity_csv \
+  --qlib-dir ~/.qlib/qlib_data/us_liquid_alpaca \
+  --name us_liquid_1000 \
+  --topk 1000 \
+  --price-floor 3
+```
+
+Verify and run it independently of the S&P 500 experiment:
+
+```bash
+python scripts/04_verify_qlib.py \
+  --qlib-dir ~/.qlib/qlib_data/us_liquid_alpaca \
+  --instrument us_liquid_1000 \
+  --alpha158
+
+qrun configs/workflow_us_liquid_1000_lightgbm_alpha158.yaml
+```
+
+The candidate file is a current exchange-listing snapshot. Monthly liquidity
+selection is point-in-time, but delisted companies absent from the current
+snapshot remain a source of survivorship bias. A licensed historical security
+master is required to eliminate that bias fully.
+
+## Market-data storage
+
+Alpaca-derived bar data is deliberately excluded from Git. Besides making the
+repository impractically large, Alpaca does not permit redistribution of its
+API market data without written consent. Keep the CSV and Qlib caches private;
+use bounded `--start` and `--end` downloads to update or backfill them without
+re-fetching existing periods.

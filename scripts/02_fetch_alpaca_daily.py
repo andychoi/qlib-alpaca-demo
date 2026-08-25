@@ -131,6 +131,7 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--universe", default="data/universe/sp500_current.csv")
     p.add_argument("--output-dir", default="data/qlib_csv")
+    p.add_argument("--status-file", default="reports/alpaca_download_status.csv")
     p.add_argument("--start", default=os.getenv("START_DATE", "2020-01-01"))
     p.add_argument("--end", default=os.getenv("END_DATE") or None)
     p.add_argument("--batch-size", type=int, default=int(os.getenv("ALPACA_BATCH_SIZE", "25")))
@@ -224,7 +225,9 @@ def main() -> None:
         time.sleep(0.25)
 
     status = pd.DataFrame(status_rows)
-    status.to_csv("reports/alpaca_download_status.csv", index=False)
+    status_file = Path(args.status_file)
+    status_file.parent.mkdir(parents=True, exist_ok=True)
+    status.to_csv(status_file, index=False)
 
     ok = status[status["rows"] > 0]
     print()
@@ -232,7 +235,7 @@ def main() -> None:
     if len(ok):
         print(f"Date coverage: {ok['first_date'].min()} .. {ok['last_date'].max()}")
         print(f"Rows: {int(ok['rows'].sum()):,}")
-    print("Status: reports/alpaca_download_status.csv")
+    print(f"Status: {status_file}")
 
 
 if __name__ == "__main__":

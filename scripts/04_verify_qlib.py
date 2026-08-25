@@ -23,6 +23,7 @@ def main() -> None:
     p.add_argument("--start", default="2024-01-01")
     p.add_argument("--end", default="2026-08-24")
     p.add_argument("--alpha158", action="store_true")
+    p.add_argument("--instrument", default="sp500")
     args = p.parse_args()
 
     provider = str(Path(args.qlib_dir).expanduser().resolve())
@@ -34,7 +35,7 @@ def main() -> None:
         print(f"Calendar: {calendar[0]} .. {calendar[-1]}")
 
     features = D.features(
-        D.instruments("sp500"),
+        D.instruments(args.instrument),
         ["$open", "$high", "$low", "$close", "$volume", "$vwap", "$factor"],
         start_time=args.start,
         end_time=args.end,
@@ -61,7 +62,7 @@ def main() -> None:
 
         # Small interval for construction/function verification.
         h = Alpha158(
-            instruments="sp500",
+            instruments=args.instrument,
             start_time="2022-01-01",
             end_time=args.end,
             fit_start_time="2022-01-01",
