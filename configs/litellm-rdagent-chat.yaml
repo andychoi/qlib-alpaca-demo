@@ -1,0 +1,9 @@
+model_list:
+  - model_name: qwen3.5-9b-mlx
+    litellm_params:
+      model: ollama_chat/qwen3.5:9b-mlx
+      api_base: http://127.0.0.1:11434
+      think: false
+
+litellm_settings:
+  request_timeout: 600

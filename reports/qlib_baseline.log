@@ -1,0 +1,79 @@
+[71860:MainThread](2026-08-25 15:17:17,877) INFO - qlib.qrun - [run.py:78] - Render the template with the context: {}
+[71860:MainThread](2026-08-25 15:17:17,887) INFO - qlib.Initialization - [config.py:452] - default_conf: client.
+[71860:MainThread](2026-08-25 15:17:17,889) INFO - qlib.Initialization - [__init__.py:75] - qlib successfully initialized based on client settings.
+[71860:MainThread](2026-08-25 15:17:17,889) INFO - qlib.Initialization - [__init__.py:77] - data_path={'__DEFAULT_FREQ': PosixPath('/Users/andy/.qlib/qlib_data/us_sp500_alpaca')}
+[71860:MainThread](2026-08-25 15:17:18,500) INFO - qlib.workflow - [exp.py:258] - Experiment 1 starts running ...
+[71860:MainThread](2026-08-25 15:17:19,029) INFO - qlib.workflow - [recorder.py:345] - Recorder 8c3b01a973bc4f38a11514c9ee22846e starts running under Experiment 1 ...
+ModuleNotFoundError. CatBoostModel are skipped. (optional: maybe installing CatBoostModel can fix it.)
+ModuleNotFoundError. XGBModel is skipped(optional: maybe installing xgboost can fix it).
+ModuleNotFoundError.  PyTorch models are skipped (optional: maybe installing pytorch can fix it).
+[71860:MainThread](2026-08-25 15:17:49,269) INFO - qlib.timer - [log.py:127] - Time cost: 29.699s | Loading data Done
+[71860:MainThread](2026-08-25 15:17:49,561) INFO - qlib.timer - [log.py:127] - Time cost: 0.109s | DropnaLabel Done
+[71860:MainThread](2026-08-25 15:17:50,386) INFO - qlib.timer - [log.py:127] - Time cost: 0.824s | CSZScoreNorm Done
+[71860:MainThread](2026-08-25 15:17:50,387) INFO - qlib.timer - [log.py:127] - Time cost: 1.117s | fit & process data Done
+[71860:MainThread](2026-08-25 15:17:50,388) INFO - qlib.timer - [log.py:127] - Time cost: 30.818s | Init data Done
+[71860:MainThread](2026-08-25 15:17:57,852) INFO - qlib.fill_placeholder - [__init__.py:798] - <PRED> lookes like a placeholder, but it can't match to any given values
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[71860:MainThread](2026-08-25 15:17:58,116) INFO - qlib.workflow - [record_temp.py:198] - Signal record 'pred.pkl' has been saved as the artifact of the Experiment 1
+Training until validation scores don't improve for 50 rounds
+[20]	train's l2: 0.962137	valid's l2: 0.998721
+[40]	train's l2: 0.934612	valid's l2: 0.999887
+Early stopping, best iteration is:
+[1]	train's l2: 0.99599	valid's l2: 0.997996
+'The following are prediction results of the LGBModel model.'
+                          score
+datetime   instrument          
+2025-01-02 A          -0.000332
+           AAPL       -0.000332
+           ABBV       -0.000332
+           ABNB       -0.000332
+           ABT        -0.000332
+Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]
+Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 218.67it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 186.81it/s]
+Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]
+Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 662.19it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 460.61it/s]
+{'IC': np.float64(0.0038008351787471822),
+ 'ICIR': np.float64(0.03514478406037358),
+ 'Rank IC': np.float64(-0.0029116752038982037),
+ 'Rank ICIR': np.float64(-0.033310562605759354)}
+Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]
+Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 850.60it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 582.79it/s]
+[71860:MainThread](2026-08-25 15:17:58,700) INFO - qlib.backtest caller - [__init__.py:93] - Create new exchange
+[71860:MainThread](2026-08-25 15:18:07,328) WARNING - qlib.data - [data.py:665] - load calendar error: freq=day, future=True; return current calendar!
+[71860:MainThread](2026-08-25 15:18:07,329) WARNING - qlib.data - [data.py:668] - You can get future calendar by referring to the following document: https://github.com/microsoft/qlib/blob/main/scripts/data_collector/contrib/README.md
+[71860:MainThread](2026-08-25 15:18:07,332) WARNING - qlib.BaseExecutor - [executor.py:121] - `common_infra` is not set for <qlib.backtest.executor.SimulatorExecutor object at 0x11d52d520>
+backtest loop:   0%|          | 0/410 [00:00<?, ?it/s]/Users/andy/invest/qlib_alpaca_sp500_demo/.venv/lib/python3.12/site-packages/qlib/utils/index_data.py:492: RuntimeWarning: Mean of empty slice
+  return np.nanmean(self.data)
+backtest loop:   2%|▏         | 10/410 [00:00<00:04, 98.00it/s]backtest loop:   5%|▌         | 21/410 [00:00<00:03, 101.79it/s]backtest loop:   8%|▊         | 33/410 [00:00<00:03, 108.99it/s]backtest loop:  11%|█         | 44/410 [00:00<00:03, 106.62it/s]backtest loop:  14%|█▎        | 56/410 [00:00<00:03, 111.02it/s]backtest loop:  17%|█▋        | 69/410 [00:00<00:03, 110.99it/s]backtest loop:  20%|█▉        | 81/410 [00:00<00:02, 113.56it/s]backtest loop:  23%|██▎       | 93/410 [00:00<00:02, 111.04it/s]backtest loop:  26%|██▌       | 105/410 [00:00<00:02, 112.98it/s]backtest loop:  29%|██▊       | 117/410 [00:01<00:02, 107.45it/s]backtest loop:  31%|███▏      | 129/410 [00:01<00:02, 110.73it/s]backtest loop:  34%|███▍      | 141/410 [00:01<00:02, 109.88it/s]backtest loop:  37%|███▋      | 153/410 [00:01<00:02, 112.63it/s]backtest loop:  40%|████      | 165/410 [00:01<00:02, 111.53it/s]backtest loop:  43%|████▎     | 178/410 [00:01<00:02, 114.66it/s]backtest loop:  46%|████▋     | 190/410 [00:01<00:01, 112.54it/s]backtest loop:  50%|████▉     | 203/410 [00:01<00:01, 115.69it/s]backtest loop:  52%|█████▏    | 215/410 [00:01<00:01, 113.47it/s]backtest loop:  55%|█████▌    | 227/410 [00:02<00:01, 112.05it/s]backtest loop:  58%|█████▊    | 239/410 [00:02<00:01, 110.94it/s]backtest loop:  61%|██████    | 251/410 [00:02<00:01, 103.84it/s]backtest loop:  64%|██████▍   | 263/410 [00:02<00:01, 108.04it/s]backtest loop:  67%|██████▋   | 275/410 [00:02<00:01, 107.48it/s]backtest loop:  70%|███████   | 287/410 [00:02<00:01, 110.79it/s]backtest loop:  73%|███████▎  | 299/410 [00:02<00:01, 109.56it/s]backtest loop:  76%|███████▌  | 311/410 [00:02<00:00, 112.03it/s]backtest loop:  79%|███████▉  | 323/410 [00:02<00:00, 109.94it/s]backtest loop:  82%|████████▏ | 335/410 [00:03<00:00, 112.55it/s]backtest loop:  85%|████████▍ | 347/410 [00:03<00:00, 114.07it/s]backtest loop:  88%|████████▊ | 359/410 [00:03<00:00, 111.85it/s]backtest loop:  90%|█████████ | 371/410 [00:03<00:00, 110.41it/s]backtest loop:  93%|█████████▎| 383/410 [00:03<00:00, 112.44it/s]backtest loop:  96%|█████████▋| 395/410 [00:03<00:00, 110.84it/s]backtest loop:  99%|█████████▉| 407/410 [00:03<00:00, 113.05it/s]backtest loop: 100%|██████████| 410/410 [00:03<00:00, 110.84it/s]
+[71860:MainThread](2026-08-25 15:18:11,056) INFO - qlib.workflow - [record_temp.py:515] - Portfolio analysis record 'port_analysis_1day.pkl' has been saved as the artifact of the Experiment 1
+[71860:MainThread](2026-08-25 15:18:11,063) INFO - qlib.workflow - [record_temp.py:540] - Indicator analysis record 'indicator_analysis_1day.pkl' has been saved as the artifact of the Experiment 1
+[71860:MainThread](2026-08-25 15:18:11,408) INFO - qlib.timer - [log.py:127] - Time cost: 0.000s | waiting `async_log` Done
+'The following are analysis results of benchmark return(1day).'
+                       risk
+mean               0.000749
+std                0.010561
+annualized_return  0.178252
+information_ratio  1.094018
+max_drawdown      -0.202204
+'The following are analysis results of the excess return without cost(1day).'
+                       risk
+mean               0.000470
+std                0.006677
+annualized_return  0.111818
+information_ratio  1.085498
+max_drawdown      -0.065950
+'The following are analysis results of the excess return with cost(1day).'
+                       risk
+mean               0.000370
+std                0.006678
+annualized_return  0.088025
+information_ratio  0.854431
+max_drawdown      -0.070301
+'The following are analysis results of indicators(1day).'
+     value
+ffr    1.0
+pa     0.0
+pos    0.0
